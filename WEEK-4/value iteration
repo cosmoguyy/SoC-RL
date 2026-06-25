@@ -1,0 +1,83 @@
+Initialize State Values
+
+V = {
+    "A": 0,
+    "B": 0,
+    "C": 0
+}
+
+print(V)
+
+
+
+
+Bellman Update
+
+reward = 10
+
+gamma = 0.9
+
+next_state_value = 5
+
+value = reward + gamma * next_state_value
+
+print(value)
+
+
+
+
+Maximum Action Value
+
+action_values = [4, 8, 6]
+
+best_value = max(action_values)
+
+print(best_value)
+
+
+
+
+Choose Best Action
+
+actions = ["Left", "Right", "Up"]
+
+q_values = [4, 8, 6]
+
+best_action = actions[q_values.index(max(q_values))]
+
+print(best_action)
+
+
+
+
+Update State Value
+
+V = {"A": 0}
+
+V["A"] = 12
+
+print(V)
+
+
+
+
+Single Iteration
+
+state_values = [1, 5, 3]
+
+new_value = max(state_values)
+
+print(new_value)
+
+
+
+
+Convergence Check
+
+old_value = 10
+
+new_value = 10.001
+
+difference = abs(new_value - old_value)
+
+print(difference < 0.01)
