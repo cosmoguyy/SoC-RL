@@ -1,1 +1,59 @@
+Create a Grid World
+
+grid = [
+    ["S", ".", "."],
+    [".", ".", "."],
+    [".", ".", "G"]
+]
+
+for row in grid:
+
+    print(row)
+
+
+
+
+Agent Position
+
+agent_row = 0
+
+agent_col = 0
+
+print("Agent Position:", (agent_row, agent_col))
+
+agent_col += 1
+
+print("New Position:", (agent_row, agent_col))
+
+
+
+
+Move Agent in Grid
+
+position = [0, 0]
+
+action = "RIGHT"
+
+if action == "RIGHT":
+
+    position[1] += 1
+
+print(position)
+
+
+
+
+Check Goal State
+
+goal = (2, 2)
+
+current_state = (2, 2)
+
+if current_state == goal:
+
+    print("Goal Reached!")
+
+else:
+
+    print("Keep Moving")
 
