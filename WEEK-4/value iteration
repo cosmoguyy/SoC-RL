@@ -81,3 +81,74 @@ new_value = 10.001
 difference = abs(new_value - old_value)
 
 print(difference < 0.01)
+
+
+WEEK 4 EXERCISE:
+
+
+1.
+Yes. The value surface is highest near the goal and decreases with distance,
+which matches the intuition that states closer to the goal have higher expected return.
+
+from mpl_toolkits.mplot3d import Axes3D
+
+Z = V.reshape(env.size, env.size)
+X, Y = np.meshgrid(np.arange(env.size), np.arange(env.size))
+
+fig = plt.figure(figsize=(7,6))
+ax = fig.add_subplot(111, projection='3d')
+ax.plot_surface(X, Y, Z, cmap='viridis')
+
+ax.set_xlabel("Column")
+ax.set_ylabel("Row")
+ax.set_zlabel("Value")
+ax.set_title("Optimal Value Function")
+
+plt.show()
+
+
+
+2.
+Yes. Value iteration still converges. The optimal policy becomes more short-sighted,
+preferring actions that reach the goal quickly rather than maximizing long-term rewards.
+
+
+
+3.
+Asynchronous value iteration also converges. Its updates are noisier because only one state is updated at a time,
+but it still converges to the optimal value function.
+
+def async_value_iteration(env, gamma=0.99, theta=1e-6):
+    V = np.zeros(env.n_states())
+    errors = []
+
+    while True:
+        s = np.random.randint(env.n_states())
+
+        q = np.array([
+            sum(p * (r + (0 if d else gamma * V[ns]))
+                for p, ns, r, d in env.transitions(s, a))
+            for a in range(env.n_actions())
+        ])
+
+        old = V[s]
+        V[s] = q.max()
+
+        errors.append(abs(old - V[s]))
+
+        if errors[-1] < theta:
+            break
+
+    return V, errors
+
+AND COMPARE IT WITH 
+
+
+V_async, err_async = async_value_iteration(env)
+
+plt.plot(err_history, label="Synchronous")
+plt.plot(err_async, label="Asynchronous")
+plt.xlabel("Iteration")
+plt.ylabel("Maximum Update")
+plt.legend()
+plt.show()
