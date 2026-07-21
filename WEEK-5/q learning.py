@@ -77,3 +77,53 @@ best_action = q_values.index(
 )
 
 print(best_action)
+
+
+
+WEEK 5 EXERCISE:
+
+
+1.
+Q-Learning may still converge eventually if every state-action pair has already been explored sufficiently, 
+but starting with a purely greedy policy usually prevents adequate exploration.
+SARSA is affected similarly and can also converge to a poor policy due to insufficient exploration.
+
+                                                                                                          
+                                                                                                          
+2.
+Increasing α makes learning noisier. Q-Learning typically becomes unstable sooner than SARSA because it updates toward the maximum estimated action value,
+while SARSA updates using the action actually taken.
+                                                                                                          
+
+3.
+Double Q-Learning generally reduces the overestimation bias seen in standard Q-Learning by separating action selection from action evaluation using two Q-tables.
+
+def double_q_learning(env, episodes=5000, alpha=0.1, gamma=0.99, epsilon=0.1):
+    Q1 = np.zeros((env.observation_space.n, env.action_space.n))
+    Q2 = np.zeros((env.observation_space.n, env.action_space.n))
+
+    for _ in range(episodes):
+        s, _ = env.reset()
+        done = False
+
+        while not done:
+            if np.random.rand() < epsilon:
+                a = env.action_space.sample()
+            else:
+                a = np.argmax(Q1[s] + Q2[s])
+
+            ns, r, terminated, truncated, _ = env.step(a)
+            done = terminated or truncated
+
+            if np.random.rand() < 0.5:
+                best = np.argmax(Q1[ns])
+                target = r + (0 if done else gamma * Q2[ns, best])
+                Q1[s, a] += alpha * (target - Q1[s, a])
+            else:
+                best = np.argmax(Q2[ns])
+                target = r + (0 if done else gamma * Q1[ns, best])
+                Q2[s, a] += alpha * (target - Q2[s, a])
+
+            s = ns
+
+    return Q1 + Q2
