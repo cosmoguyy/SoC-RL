@@ -48,3 +48,53 @@ else:
 
 
     
+WEEK 3 EXERCISE:
+
+1.
+No. The hand-crafted policy does not work reliably because the 8×8 map is larger and the slippery dynamics make the planned path unreliable.
+env = gym.make("FrozenLake-v1", map_name="8x8", is_slippery=True)
+
+
+2.
+Additional evaluation code:
+
+episode_counts = [10, 50, 100, 200, 500, 1000]
+win_rates = []
+
+for n in episode_counts:
+    wins = 0
+    for _ in range(n):
+        obs, _ = env.reset()
+        done = False
+
+        while not done:
+            action = env.action_space.sample()
+            obs, reward, terminated, truncated, _ = env.step(action)
+            done = terminated or truncated
+
+        wins += reward
+
+    win_rates.append(wins / n)
+
+plt.plot(episode_counts, win_rates, marker='o')
+plt.xlabel("Evaluation Episodes")
+plt.ylabel("Win Rate")
+plt.title("Random Policy Win Rate")
+plt.grid(True)
+plt.show()
+
+Around 500–1000 episodes are typically needed for a stable estimate of the random policy's win rate.
+
+
+3.
+#Saafer policy:
+
+def safe_policy(state):
+    row, col = divmod(state, 8)
+
+    if col < 7:
+        return 2      # Right
+    elif row < 7:
+        return 1      # Down
+    else:
+        return 0      # Left
