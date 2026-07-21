@@ -26,6 +26,8 @@ agent_col += 1
 print("New Position:", (agent_row, agent_col))
 
 
+WEEK 3 EXERCISE:
+
 
 
 Move Agent in Grid
@@ -56,4 +58,32 @@ if current_state == goal:
 else:
 
     print("Keep Moving")
+
+WEEK 3 EXERCISE:
+
+1.
+The rollout returns become more variable and the average return decreases because the agent sometimes moves in a random direction.
+" if np.random.rand() < 0.1:
+    action = np.random.choice([0, 1, 2, 3])
+
+next_state, reward, done, _ = env.step(action) "
+
+2.
+The distribution of returns shifts toward higher values because falling into a pit is less costly.
+lINK:https://colab.research.google.com/drive/1TLUH88G8Y19U-HnACXl2VDyEehQ_Y3eX?usp=sharing
+
+3.
+TREASURE = (2, 2)
+
+if state == TREASURE:
+    reward = 3
+elif state in PITS:
+    reward = -5
+elif state == GOAL:
+    reward = 10
+else:
+    reward = 0
+
+
+A random policy finds the treasure only occasionally because it explores the environment randomly.
 
