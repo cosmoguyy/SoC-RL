@@ -62,3 +62,9 @@ policy = {
 policy["A"] = "Right"
 
 print(policy)
+
+
+
+WEEK 4 EXERCISE:
+Yes. If the treasure provides sufficient reward, the optimal policy changes to visit it before reaching the goal.
+Link: https://colab.research.google.com/drive/1Zy1MuhUNU8nMIMWx6Fneyv7Hn504eKf-?usp=sharing
